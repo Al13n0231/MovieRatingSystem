@@ -40,17 +40,28 @@ public class Main {
                 directorRatingSums.get(movie.getDirector()).add(movie);
             }
         }
-        for(String director :directorRatingSums.keySet()){
+        double highestAverage = 0.0;
+        String bestDirector = "";
+        for(String director : directorRatingSums.keySet()){
             List<Movie> ms = directorRatingSums.get(director);
             int total = 0;
-            for(int i=0; i<ms.size(); i++){
+            for(int i = 0; i < ms.size(); i++){
                 total += ms.get(i).getRating();
             }
             double avg = (double)total / ms.size();
-            System.out.println(director+ ":" +avg);
+            System.out.println(director + ": " + avg);
 
-
+            // Check if this director has the highest average rating
+            if(avg > highestAverage) {
+                highestAverage = avg;
+                bestDirector = director;
+            }
         }
+
+        // Print the director with the highest average rating
+        System.out.println("Director with the highest average rating: " + bestDirector + " with an average rating of " + highestAverage);
+    }
+}
 
 //        directorRatingSums.put(jurassicPark.getDirector(), jurassicPark);
 //        directorRatingSums.put(jurassicPark.getDirector(), directorRatingSums.get(jurassicPark.getDirector())+readyPlayerOne.getRating());
@@ -65,5 +76,4 @@ public class Main {
 //        String Name = myMovie.getMovieName();
 //        System.out.println(Name);
 
-    }
-}
+    
