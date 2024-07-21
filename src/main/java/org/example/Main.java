@@ -30,50 +30,29 @@ public class Main {
         movies.add(vertigo);
         movies.add(theBirds);
 
-        HashMap<String, List<Movie>> directorRatingSums = new HashMap<String, List<Movie>>();
+        int counter = 0;
+        HashMap<String, Double> directorRatingAvg = new HashMap<String, Double>();
+        HashMap<String, Double> directorRatingSums = new HashMap<String, Double>();
         for(Movie movie:movies){
             if (directorRatingSums.containsKey(movie.getDirector())){
-                directorRatingSums.get(movie.getDirector()).add(movie);
+                Double currentSum = directorRatingSums.get(movie.getDirector());
+                directorRatingSums.put(movie.getDirector(), currentSum + movie.getRating());
             }
             else {
-                directorRatingSums.put(movie.getDirector(),new ArrayList<>());
-                directorRatingSums.get(movie.getDirector()).add(movie);
+                directorRatingSums.put(movie.getDirector(), (double) movie.getRating());
             }
-        }
-        double highestAverage = 0.0;
-        String bestDirector = "";
-        for(String director : directorRatingSums.keySet()){
-            List<Movie> ms = directorRatingSums.get(director);
-            int total = 0;
-            for(int i = 0; i < ms.size(); i++){
-                total += ms.get(i).getRating();
-            }
-            double avg = (double)total / ms.size();
-            System.out.println(director + ": " + avg);
+            if (counter == 2){
+               directorRatingAvg.put(movie.getDirector(), directorRatingSums.get(movie.getDirector()) / 3);
+               counter = 0;
 
-            // Check if this director has the highest average rating
-            if(avg > highestAverage) {
-                highestAverage = avg;
-                bestDirector = director;
             }
-        }
+            counter += 1;
 
-        // Print the director with the highest average rating
-        System.out.println("Director with the highest average rating: " + bestDirector + " with an average rating of " + highestAverage);
+        }
+        directorRatingAvg.forEach((key, value) -> System.out.println(key + " " + value));
+
+
+
     }
 }
 
-//        directorRatingSums.put(jurassicPark.getDirector(), jurassicPark);
-//        directorRatingSums.put(jurassicPark.getDirector(), directorRatingSums.get(jurassicPark.getDirector())+readyPlayerOne.getRating());
-//        directorRatingSums.put(jurassicPark.getDirector(), directorRatingSums.get(jurassicPark.getDirector())+lincoln.getRating());
-
-//        System.out.println(directorRatingSums.get("steven spielberg"));
-//        int sum = directorRatingSums.get("steven spielberg");
-//        float avg = (float) sum / 3;
-//        System.out.println(avg);
-
-
-//        String Name = myMovie.getMovieName();
-//        System.out.println(Name);
-
-    
